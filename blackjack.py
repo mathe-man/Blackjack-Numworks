@@ -39,17 +39,33 @@ class Player:
         print(f"{self.name} won !")
     
     def pick(self)-> None:
+        pick = randint(2, 10)
         self.cards.append(randint(2, 10))
         self.stayed = False
 
+        print(f"{self.name} picked a {pick}, is score is now {self.get_score()}")
+
     def stay(self)-> None:
         self.stayed = True
+
+        print(f"{self.name} keep is score at {self.get_score()}")
+
+    def chose_action(self)-> None:
+        # if pick
+        if (choice(f"{self.name}, pick or stay ?[P/S]", ["p", "s", "pick", "stay"]) % 2 == 0):
+            self.pick()
+
+        else:
+            self.stay()
 
 
 class Game:
     def __init__(self):
         self.P1 = Player((input("Player 1 name: ")))
         self.P2 = Player((input("Player 2 name: ")))
+
+        self.P1.show_cards()
+        self.P2.show_cards()
     
     def draw(self):
         print("Draw")
@@ -108,16 +124,15 @@ class Game:
 
     def Play(self):
         while not self.check_winner():
-            self.P1.pick()
-            self.P2.pick()
+            self.P1.chose_action()
+            self.P2.chose_action()
 
+            print("\nResult of this turn: ")
             self.P1.show_cards()
             self.P2.show_cards()
 
             time.sleep(2)
             
-
-choice("Chose [Y/n]", ["y", "n"], "This is not a valid choice")
 
 game = Game()
 game.Play()
