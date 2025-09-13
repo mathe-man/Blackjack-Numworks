@@ -2,6 +2,24 @@
 from random import *
 import time
 
+# return the index of the choice
+def choice(question: str, options: list[str],invalid_option_message: str = "",  case_sensitive: bool = True) -> int:
+    user_input = input(question)
+
+    for i in range(len(options)):
+        if (user_input == options[i]):
+            return i
+        # if case sensitive then it convert both side to lower
+        elif (case_sensitive):
+            if (str.lower(user_input) == str.lower(options[i])):
+                return i
+    
+    print(invalid_option_message)
+
+    # Ask another time
+    return choice(question, options, invalid_option_message)
+
+
 class Player:
     def __init__(self, name: str)-> None:
         self.name = name
@@ -98,6 +116,8 @@ class Game:
 
             time.sleep(2)
             
+
+choice("Chose [Y/n]", ["y", "n"], "This is not a valid choice")
 
 game = Game()
 game.Play()
