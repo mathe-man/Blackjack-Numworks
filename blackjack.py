@@ -50,6 +50,7 @@ class Game:
         raise Exception("Both player have the same score")
             
 
+    # Return True if there is a winner or the game should end
     def check_winner(self)-> bool:
         # Win if score is 21 or adversary score is more than 21
         p1_win = self.P1.get_score() == 21
@@ -61,15 +62,15 @@ class Game:
         # If both scores are 21 : Draw 
         if (p1_win and p2_win):
             self.draw()
-            return False
+            return True
         
         elif (p1_win):
             self.P1.win()
-            return False
+            return True
 
         elif (p2_win):
             self.P2.win()
-            return False
+            return True
 
         # If both player stayed
         if (self.P1.stayed and
@@ -77,18 +78,18 @@ class Game:
             
             if (self.is_score_draw()):
                 self.draw()
-                return False
+                return True
             
             else:
                 self.get_highest_score_player().win()
-                return False
+                return True
             
-        return True
+        return False
 
             
 
     def Play(self):
-        while self.check_winner():
+        while not self.check_winner():
             self.P1.pick()
             self.P2.pick()
 
