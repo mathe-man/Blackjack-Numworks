@@ -1,5 +1,6 @@
-from kandinsky import *
+#from kandinsky import *
 from random import *
+import time
 
 class Player:
     def __init__(self, name: str)-> None:
@@ -10,6 +11,9 @@ class Player:
             ]
         self.stayed = False
         
+    def show_cards(self):
+        print(f"{self.name} ({self.get_score()}): {', '.join(str(n) for n in self.cards)}")
+
     def get_score(self)-> int:
         return sum(self.cards)
     
@@ -17,7 +21,7 @@ class Player:
         print(f"{self.name} won !")
     
     def pick(self)-> None:
-        self.cards.append(random(2, 10))
+        self.cards.append(randint(2, 10))
         self.stayed = False
 
     def stay(self)-> None:
@@ -85,7 +89,14 @@ class Game:
 
     def Play(self):
         while self.check_winner():
-            pass
+            self.P1.pick()
+            self.P2.pick()
+
+            self.P1.show_cards()
+            self.P2.show_cards()
+
+            time.sleep(2)
+            
 
 game = Game()
-print(game.check_winner())
+game.Play()
