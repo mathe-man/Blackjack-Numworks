@@ -30,29 +30,36 @@ class Player:
         self.stayed = False
         
     def show_cards(self):
-        print(f"{self.name} ({self.get_score()}): {', '.join(str(n) for n in self.cards)}")
+        #print(f"{self.name} ({self.get_score()}): {', '.join(str(n) for n in self.cards)}")
+        message = self.name + " (" + str(self.get_score()) + ") :"
+        for i in range(len(self.cards)):
+            message += str(self.cards[i])
+            if (i+1 != len(self.cards)):
+                message += ", "
+
+        print(message)
 
     def get_score(self)-> int:
         return sum(self.cards)
     
     def win(self)-> None:
-        print(f"{self.name} won !")
+        print(self.name + " won !")
     
     def pick(self)-> None:
         pick = randint(2, 10)
         self.cards.append(randint(2, 10))
         self.stayed = False
 
-        print(f"{self.name} picked a {pick}, is score is now {self.get_score()}")
+        print(self.name + " picked a " + str(pick) + ", is score is now " + str(self.get_score()))
 
     def stay(self)-> None:
         self.stayed = True
 
-        print(f"{self.name} keep is score at {self.get_score()}")
+        print(self.name + " keep is score at " + str(self.get_score()))
 
     def chose_action(self)-> None:
         # if pick
-        if (choice(f"{self.name}, pick or stay ?[P/S]", ["p", "s", "pick", "stay"]) % 2 == 0):
+        if (choice(self.name + ", pick or stay ?[P/S]", ["p", "s", "pick", "stay"]) % 2 == 0):
             self.pick()
 
         else:
